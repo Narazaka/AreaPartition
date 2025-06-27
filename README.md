@@ -30,6 +30,8 @@ https://github.com/Narazaka/AreaPartition/releases/latest から `net.narazaka.u
 
 ## 更新履歴
 
+- 1.0.0: リリース
+
 ## License
 
 [Zlib License](LICENSE.txt)
