@@ -30,6 +30,7 @@ https://github.com/Narazaka/AreaPartition/releases/latest から `net.narazaka.u
 
 ## 更新履歴
 
+- 1.1.0: AutoGenerate / Root を追加
 - 1.0.0: リリース
 
 ## License
