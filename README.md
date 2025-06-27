@@ -6,6 +6,10 @@ VRChatワールドなど向けに、Occlusion Culling用メッシュと衝突を
 
 ## Install
 
+### OpenUPM
+
+See [OpenUPM page](https://openupm.com/packages/net.narazaka.unity.area-partition/)
+
 ### VCC用インストーラーunitypackageによる方法（おすすめ）
 
 https://github.com/Narazaka/AreaPartition/releases/latest から `net.narazaka.unity.area-partition-installer.zip` をダウンロードして解凍し、対象のプロジェクトにインポートする。
