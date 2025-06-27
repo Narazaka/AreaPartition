@@ -8,7 +8,7 @@ VRChatワールドなど向けに、Occlusion Culling用メッシュと衝突を
 
 ### VCC用インストーラーunitypackageによる方法（おすすめ）
 
-https://github.com/Narazaka/AreaPartition/releases/latest から `net.narazaka.vrchat.area-partition-installer.zip` をダウンロードして解凍し、対象のプロジェクトにインポートする。
+https://github.com/Narazaka/AreaPartition/releases/latest から `net.narazaka.unity.area-partition-installer.zip` をダウンロードして解凍し、対象のプロジェクトにインポートする。
 
 ### VCCによる方法
 
