@@ -1,6 +1,8 @@
 # Area Partition
 
-desc
+Automatically generates grid-based area partitions for VRChat worlds etc., with support for occlusion culling meshes and colliders.
+
+VRChatワールドなど向けに、Occlusion Culling用メッシュと衝突を備えたグリッド状のエリア分割を自動生成するツール。
 
 ## Install
 
@@ -16,7 +18,11 @@ https://github.com/Narazaka/AreaPartition/releases/latest から `net.narazaka.v
 
 ## Usage
 
-TODO
+`AreaPartitionGenerator` プレハブをシーンに配置するか、空のGameObjectに `Area Partition Generator` コンポーネントを追加する。
+
+`Room` プレハブのVariantとしてエリアのテンプレートを作り、`Room Settings`に設定し数を決める。
+
+`Occlusion` のチェックを入れるとOcclusion Culling用メッシュが表示されるので、その状態でOcclusion Cullingをベイクして下さい。
 
 ## License
 

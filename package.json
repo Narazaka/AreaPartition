@@ -2,7 +2,7 @@
   "name": "net.narazaka.vrchat.area-partition",
   "version": "1.0.0",
   "displayName": "Area Partition",
-  "description": "Area Partition",
+  "description": "Automatically generates grid-based area partitions for VRChat worlds, with support for occlusion culling meshes and colliders.",
   "author": {
     "name": "Narazaka",
     "url": "https://github.com/Narazaka"
@@ -10,9 +10,5 @@
   "license": "Zlib",
   "type": "tool",
   "url" : "https://github.com/Narazaka/AreaPartition.git",
-  "unity": "2022.3",
-  "vpmDependencies": {
-    "com.vrchat.avatars": ">=3.7.5",
-    "com.vrchat.worlds": ">=3.7.5"
-  }
+  "unity": "2022.3"
 }
