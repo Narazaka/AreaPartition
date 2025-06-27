@@ -1,6 +1,6 @@
 {
   "name": "net.narazaka.unity.area-partition",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "displayName": "Area Partition",
   "description": "Automatically generates grid-based area partitions for VRChat worlds, with support for occlusion culling meshes and colliders.",
   "author": {
