@@ -12,11 +12,15 @@ namespace Narazaka.VRChat.AreaPartition.Runtime
         , VRC.SDKBase.IEditorOnly
 #endif
     {
+        [SerializeField] internal bool AutoGenerate;
+        [SerializeField] internal Transform Root;
         [SerializeField] internal RoomSetting[] RoomSettings;
         [SerializeField] internal Vector3 Bounds = new Vector3(20, 20, 20);
         [SerializeField] internal float BoundWallThickness = 2;
         [SerializeField] internal int RoomColCount = 10;
         [SerializeField] internal bool Centering = true;
+
+        internal Transform EffectiveRoot => Root == null ? transform : Root;
 
         internal void SetRoomTransforms(Transform room, int index)
         {

@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using Narazaka.VRChat.AreaPartition.Runtime;
@@ -13,6 +10,8 @@ namespace Narazaka.VRChat.AreaPartition.Editor
     {
         bool occlusionEnabled = false;
 
+        SerializedProperty AutoGenerate;
+        SerializedProperty Root;
         SerializedProperty RoomSettings;
         SerializedProperty Bounds;
         SerializedProperty BoundWallThickness;
@@ -20,6 +19,8 @@ namespace Narazaka.VRChat.AreaPartition.Editor
         SerializedProperty Centering;
         void OnEnable()
         {
+            AutoGenerate = serializedObject.FindProperty(nameof(AreaPartitionGenerator.AutoGenerate));
+            Root = serializedObject.FindProperty(nameof(AreaPartitionGenerator.Root));
             RoomSettings = serializedObject.FindProperty(nameof(AreaPartitionGenerator.RoomSettings));
             Bounds = serializedObject.FindProperty(nameof(AreaPartitionGenerator.Bounds));
             BoundWallThickness = serializedObject.FindProperty(nameof(AreaPartitionGenerator.BoundWallThickness));
@@ -30,6 +31,8 @@ namespace Narazaka.VRChat.AreaPartition.Editor
         public override void OnInspectorGUI()
         {
             serializedObject.UpdateIfRequiredOrScript();
+            EditorGUILayout.PropertyField(AutoGenerate);
+            EditorGUILayout.PropertyField(Root);
             EditorGUILayout.PropertyField(RoomSettings, true);
             EditorGUILayout.PropertyField(Bounds);
             EditorGUILayout.PropertyField(BoundWallThickness);
@@ -40,23 +43,23 @@ namespace Narazaka.VRChat.AreaPartition.Editor
             occlusionEnabled = EditorGUILayout.Toggle("Occlusion Enabled", occlusionEnabled);
             if (EditorGUI.EndChangeCheck())
             {
-                ChangeOcclusion();
+                ChangeOcclusion(target as AreaPartitionGenerator, occlusionEnabled);
             }
 
             var changed = serializedObject.hasModifiedProperties;
             serializedObject.ApplyModifiedProperties();
-            if (GUILayout.Button("Regenerate Rooms") || changed)
+            if (GUILayout.Button("Regenerate Rooms") || (changed && AutoGenerate.boolValue))
             {
-                GenerateRooms();
+                GenerateRooms(target as AreaPartitionGenerator);
+                ChangeOcclusion(target as AreaPartitionGenerator, occlusionEnabled);
             }
         }
 
-        void GenerateRooms()
+        static void GenerateRooms(AreaPartitionGenerator gen)
         {
-            var gen = target as AreaPartitionGenerator;
             var toDeletes = new List<GameObject>();
             // delete all children
-            foreach (Transform child in gen.transform)
+            foreach (Transform child in gen.EffectiveRoot)
             {
                 toDeletes.Add(child.gameObject);
             }
@@ -72,20 +75,18 @@ namespace Narazaka.VRChat.AreaPartition.Editor
                 if (roomSetting == null || roomSetting.RoomPrefab == null || roomSetting.RoomCount == 0) continue;
                 for (int j = 0; j < roomSetting.RoomCount; j++)
                 {
-                    var room = PrefabUtility.InstantiatePrefab(roomSetting.RoomPrefab, gen.transform) as GameObject;
+                    var room = PrefabUtility.InstantiatePrefab(roomSetting.RoomPrefab, gen.EffectiveRoot) as GameObject;
                     room.name = $"{roomSetting.RoomPrefab.name}_{j}";
                     gen.SetRoomTransforms(room.transform, count);
                     Undo.RegisterCreatedObjectUndo(room, "[AreaPartitionGenerator] Create Room");
                     count++;
                 }
             }
-            ChangeOcclusion();
         }
 
-        void ChangeOcclusion()
+        static void ChangeOcclusion(AreaPartitionGenerator gen, bool occlusionEnabled)
         {
-            var gen = target as AreaPartitionGenerator;
-            foreach (Transform room in gen.transform)
+            foreach (Transform room in gen.EffectiveRoot)
             {
                 gen.SetOcclusionMeshVisible(room, occlusionEnabled);
             }
