@@ -28,6 +28,8 @@ https://github.com/Narazaka/AreaPartition/releases/latest から `net.narazaka.u
 
 `Occlusion` のチェックを入れるとOcclusion Culling用メッシュが表示されるので、その状態でOcclusion Cullingをベイクして下さい。
 
+## 更新履歴
+
 ## License
 
 [Zlib License](LICENSE.txt)

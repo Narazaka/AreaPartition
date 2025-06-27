@@ -10,5 +10,6 @@
   "license": "Zlib",
   "type": "tool",
   "url" : "https://github.com/Narazaka/AreaPartition.git",
+  "changelogUrl": "https://github.com/Narazaka/AreaPartition#%E6%9B%B4%E6%96%B0%E5%B1%A5%E6%AD%B4",
   "unity": "2022.3"
 }
