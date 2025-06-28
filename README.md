@@ -36,6 +36,7 @@ https://github.com/Narazaka/AreaPartition/releases/latest から `net.narazaka.u
 
 ## 更新履歴
 
+- 1.1.3: 注意書き追加
 - 1.1.2: Occlusion Enabledの値が保持されるように
 - 1.1.1: fix Missing Script
 - 1.1.0: AutoGenerate / Root を追加
