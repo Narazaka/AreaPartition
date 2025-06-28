@@ -8,8 +8,6 @@ namespace Narazaka.VRChat.AreaPartition.Editor
     [CustomEditor(typeof(AreaPartitionGenerator))]
     public class AreaPartitionsGeneratorEditor : UnityEditor.Editor
     {
-        bool occlusionEnabled = false;
-
         SerializedProperty AutoGenerate;
         SerializedProperty Root;
         SerializedProperty RoomSettings;
@@ -17,6 +15,7 @@ namespace Narazaka.VRChat.AreaPartition.Editor
         SerializedProperty BoundWallThickness;
         SerializedProperty RoomColCount;
         SerializedProperty Centering;
+        SerializedProperty OcclusionEnabled;
         void OnEnable()
         {
             AutoGenerate = serializedObject.FindProperty(nameof(AreaPartitionGenerator.AutoGenerate));
@@ -26,6 +25,7 @@ namespace Narazaka.VRChat.AreaPartition.Editor
             BoundWallThickness = serializedObject.FindProperty(nameof(AreaPartitionGenerator.BoundWallThickness));
             RoomColCount = serializedObject.FindProperty(nameof(AreaPartitionGenerator.RoomColCount));
             Centering = serializedObject.FindProperty(nameof(AreaPartitionGenerator.Centering));
+            OcclusionEnabled = serializedObject.FindProperty(nameof(AreaPartitionGenerator.OcclusionEnabled));
         }
 
         public override void OnInspectorGUI()
@@ -38,12 +38,12 @@ namespace Narazaka.VRChat.AreaPartition.Editor
             EditorGUILayout.PropertyField(BoundWallThickness);
             EditorGUILayout.PropertyField(RoomColCount);
             EditorGUILayout.PropertyField(Centering);
-
+            var changeOcclusion = false;
             EditorGUI.BeginChangeCheck();
-            occlusionEnabled = EditorGUILayout.Toggle("Occlusion Enabled", occlusionEnabled);
+            EditorGUILayout.PropertyField(OcclusionEnabled);
             if (EditorGUI.EndChangeCheck())
             {
-                ChangeOcclusion(target as AreaPartitionGenerator, occlusionEnabled);
+                changeOcclusion = true;
             }
 
             var changed = serializedObject.hasModifiedProperties;
@@ -51,7 +51,11 @@ namespace Narazaka.VRChat.AreaPartition.Editor
             if (GUILayout.Button("Regenerate Rooms") || (changed && AutoGenerate.boolValue))
             {
                 GenerateRooms(target as AreaPartitionGenerator);
-                ChangeOcclusion(target as AreaPartitionGenerator, occlusionEnabled);
+                ChangeOcclusion(target as AreaPartitionGenerator);
+            }
+            else if (changeOcclusion)
+            {
+                ChangeOcclusion(target as AreaPartitionGenerator);
             }
         }
 
@@ -84,11 +88,11 @@ namespace Narazaka.VRChat.AreaPartition.Editor
             }
         }
 
-        static void ChangeOcclusion(AreaPartitionGenerator gen, bool occlusionEnabled)
+        static void ChangeOcclusion(AreaPartitionGenerator gen)
         {
             foreach (Transform room in gen.EffectiveRoot)
             {
-                gen.SetOcclusionMeshVisible(room, occlusionEnabled);
+                gen.SetOcclusionMeshVisible(room);
             }
         }
     }

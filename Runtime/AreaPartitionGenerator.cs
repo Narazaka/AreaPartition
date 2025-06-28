@@ -19,6 +19,7 @@ namespace Narazaka.VRChat.AreaPartition.Runtime
         [SerializeField] internal float BoundWallThickness = 2;
         [SerializeField] internal int RoomColCount = 10;
         [SerializeField] internal bool Centering = true;
+        [SerializeField] internal bool OcclusionEnabled = false;
 
         internal Transform EffectiveRoot => Root == null ? transform : Root;
 
@@ -63,7 +64,7 @@ namespace Narazaka.VRChat.AreaPartition.Runtime
             return pos;
         }
 
-        internal void SetOcclusionMeshVisible(Transform room, bool visible)
+        internal void SetOcclusionMeshVisible(Transform room)
         {
             var top = room.transform.Find("Bounds/Top/Occlusion");
             var bottom = room.transform.Find("Bounds/Bottom/Occlusion");
@@ -71,12 +72,12 @@ namespace Narazaka.VRChat.AreaPartition.Runtime
             var right = room.transform.Find("Bounds/Right/Occlusion");
             var front = room.transform.Find("Bounds/Front/Occlusion");
             var back = room.transform.Find("Bounds/Back/Occlusion");
-            top.gameObject.SetActive(visible);
-            bottom.gameObject.SetActive(visible);
-            left.gameObject.SetActive(visible);
-            right.gameObject.SetActive(visible);
-            front.gameObject.SetActive(visible);
-            back.gameObject.SetActive(visible);
+            top.gameObject.SetActive(OcclusionEnabled);
+            bottom.gameObject.SetActive(OcclusionEnabled);
+            left.gameObject.SetActive(OcclusionEnabled);
+            right.gameObject.SetActive(OcclusionEnabled);
+            front.gameObject.SetActive(OcclusionEnabled);
+            back.gameObject.SetActive(OcclusionEnabled);
         }
 
         [Serializable]
